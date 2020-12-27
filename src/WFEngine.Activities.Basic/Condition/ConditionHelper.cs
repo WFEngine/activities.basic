@@ -14,7 +14,7 @@ namespace WFEngine.Activities.Basic.Condition
             for (int i = 0; i < conditionGroup.Conditions.Count; i++)
             {
                 var conditionItem = conditionGroup.Conditions[i];
-                var isConditionTrue = Run(ref conditionItem, variables);
+                var isConditionTrue = RunCondition(ref conditionItem, variables);
                 if (!isConditionTrue)
                 {
                     result = false;
@@ -24,7 +24,7 @@ namespace WFEngine.Activities.Basic.Condition
             return result;
         }
 
-        private static bool Run(ref WFArgument argument, List<WFVariable> variables)
+        public static bool RunCondition(ref WFArgument argument, List<WFVariable> variables)
         {
             var result = true;
             if (argument.ArgumentType == typeof(ConditionItem).FullName)
@@ -92,6 +92,10 @@ namespace WFEngine.Activities.Basic.Condition
             {
                 return leftItemValue.Equals(rightItemValue);
             }
+            if(_operator == "Not Equal")
+            {
+                return !leftItemValue.Equals(rightItemValue);
+            }
             if(_operator == "Is Greater Than")
             {
                 return (double)Convert.ChangeType(leftItemValue, typeof(Double)) > (double)Convert.ChangeType(rightItemValue, typeof(Double));
@@ -100,10 +104,25 @@ namespace WFEngine.Activities.Basic.Condition
             {
                 return (double)Convert.ChangeType(leftItemValue,typeof(Double)) >= (double)Convert.ChangeType(rightItemValue, typeof(Double));
             }
+            if(_operator == "Is Less Than")
+            {
+                return (double)Convert.ChangeType(leftItemValue, typeof(Double)) < (double)Convert.ChangeType(rightItemValue, typeof(Double));
+            }
+            if(_operator == "Is Less Than Or Equal To")
+            {
+                return (double)Convert.ChangeType(leftItemValue, typeof(Double)) <= (double)Convert.ChangeType(rightItemValue, typeof(Double));
+            }
 
-            if(_operator == "AND")
+            if (_operator == "AND")
             {                
                 if ((bool)leftItemValue && (bool)rightItemValue)
+                    return true;
+                else
+                    return false;
+            }
+            if(_operator == "OR")
+            {
+                if ((bool)leftItemValue || (bool)rightItemValue)
                     return true;
                 else
                     return false;
