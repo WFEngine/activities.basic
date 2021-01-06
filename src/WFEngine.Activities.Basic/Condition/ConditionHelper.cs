@@ -69,8 +69,8 @@ namespace WFEngine.Activities.Basic.Condition
                 }
             }
             else
-            {                
-                var conditionGroup = argument.GetFirstArgumentParse<ConditionGroup>();               
+            {
+                var conditionGroup = argument.GetFirstArgumentParse<ConditionGroup>();
                 var conditionResult = conditionGroup.Run(variables);
                 if (oldConditionGroup == null)
                 {
@@ -81,7 +81,7 @@ namespace WFEngine.Activities.Basic.Condition
                     var oldConditionResult = oldConditionGroup.Run(variables);
                     result = RunCondition(conditionResult, oldConditionResult, oldConditionGroup.Operator);
                     oldConditionGroup = null;
-                }                
+                }
             }
             return result;
         }
@@ -92,35 +92,75 @@ namespace WFEngine.Activities.Basic.Condition
             {
                 return leftItemValue.Equals(rightItemValue);
             }
-            if(_operator == "Not Equal")
+            if (_operator == "Not Equal")
             {
                 return !leftItemValue.Equals(rightItemValue);
             }
-            if(_operator == "Is Greater Than")
+            if (_operator == "Is Greater Than")
             {
-                return (double)Convert.ChangeType(leftItemValue, typeof(Double)) > (double)Convert.ChangeType(rightItemValue, typeof(Double));
+                double leftItemIsDouble;
+                double rightItemIsDouble;
+                if (double.TryParse(leftItemValue.ToString(), out leftItemIsDouble) && double.TryParse(rightItemValue.ToString(), out rightItemIsDouble))
+                    return (double)Convert.ChangeType(leftItemValue, typeof(Double)) > (double)Convert.ChangeType(rightItemValue, typeof(Double));
+
+                char leftItemIsChar;
+                char rightItemIsChar;
+                if (char.TryParse(leftItemValue.ToString(), out leftItemIsChar) && char.TryParse(rightItemValue.ToString(), out rightItemIsChar))
+                    return (char)Convert.ChangeType(leftItemValue, typeof(char)) > (char)Convert.ChangeType(leftItemValue, typeof(char));
             }
-            if (_operator =="Is Greater Than Or Equal To")
+            if (_operator == "Is Greater Than Or Equal To")
             {
-                return (double)Convert.ChangeType(leftItemValue,typeof(Double)) >= (double)Convert.ChangeType(rightItemValue, typeof(Double));
+                double leftItemIsDouble;
+                double rightItemIsDouble;
+                if (double.TryParse(leftItemValue.ToString(), out leftItemIsDouble) && double.TryParse(rightItemValue.ToString(), out rightItemIsDouble))
+                    return (double)Convert.ChangeType(leftItemValue, typeof(Double)) >= (double)Convert.ChangeType(rightItemValue, typeof(Double));
+
+                char leftItemIsChar;
+                char rightItemIsChar;
+                if (char.TryParse(leftItemValue.ToString(), out leftItemIsChar) && char.TryParse(rightItemValue.ToString(), out rightItemIsChar))
+                    return (char)Convert.ChangeType(leftItemValue, typeof(char)) >= (char)Convert.ChangeType(leftItemValue, typeof(char));
             }
-            if(_operator == "Is Less Than")
+            if (_operator == "Is Less Than")
             {
-                return (double)Convert.ChangeType(leftItemValue, typeof(Double)) < (double)Convert.ChangeType(rightItemValue, typeof(Double));
+                double leftItemIsDouble;
+                double rightItemIsDouble;
+                if (double.TryParse(leftItemValue.ToString(), out leftItemIsDouble) && double.TryParse(rightItemValue.ToString(), out rightItemIsDouble))
+                    return (double)Convert.ChangeType(leftItemValue, typeof(Double)) < (double)Convert.ChangeType(rightItemValue, typeof(Double));
+
+                char leftItemIsChar;
+                char rightItemIsChar;
+                if (char.TryParse(leftItemValue.ToString(), out leftItemIsChar) && char.TryParse(rightItemValue.ToString(), out rightItemIsChar))
+                    return (char)Convert.ChangeType(leftItemValue, typeof(char)) < (char)Convert.ChangeType(leftItemValue, typeof(char));
             }
-            if(_operator == "Is Less Than Or Equal To")
+            if (_operator == "Is Less Than Or Equal To")
             {
-                return (double)Convert.ChangeType(leftItemValue, typeof(Double)) <= (double)Convert.ChangeType(rightItemValue, typeof(Double));
+                double leftItemIsDouble;
+                double rightItemIsDouble;
+                if (double.TryParse(leftItemValue.ToString(), out leftItemIsDouble) && double.TryParse(rightItemValue.ToString(), out rightItemIsDouble))
+                    return (double)Convert.ChangeType(leftItemValue, typeof(Double)) <= (double)Convert.ChangeType(rightItemValue, typeof(Double));
+
+                char leftItemIsChar;
+                char rightItemIsChar;
+                if (char.TryParse(leftItemValue.ToString(), out leftItemIsChar) && char.TryParse(rightItemValue.ToString(), out rightItemIsChar))
+                    return (char)Convert.ChangeType(leftItemValue, typeof(char)) <= (char)Convert.ChangeType(leftItemValue, typeof(char));
+            }
+            if (_operator == "Is Null")
+            {
+                return leftItemValue == null;
+            }
+            if (_operator == "Is Not Null")
+            {
+                return leftItemValue != null;
             }
 
             if (_operator == "AND")
-            {                
+            {
                 if ((bool)leftItemValue && (bool)rightItemValue)
                     return true;
                 else
                     return false;
             }
-            if(_operator == "OR")
+            if (_operator == "OR")
             {
                 if ((bool)leftItemValue || (bool)rightItemValue)
                     return true;
