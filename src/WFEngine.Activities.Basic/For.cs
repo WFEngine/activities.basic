@@ -25,16 +25,16 @@ namespace WFEngine.Activities.Basic
 
             WFArgument conditionArgument = Arguments.FirstOrDefault(x => x.Name == "ConditionItem");
             WFArgument assignArgument = Arguments.Where(x=>x != startValueArgument && x!= conditionArgument).FirstOrDefault();
-            while (ConditionHelper.RunCondition(ref conditionArgument,Variables))
-            {
-                Current.Blocks.RunBlock(Variables);
-                Assign assign = new Assign();
-                assign.Variables = new System.Collections.Generic.List<WFVariable>();
-                assign.Variables.AddRange(Variables);
-                assign.Arguments = new System.Collections.Generic.List<WFArgument>();
-                assign.Arguments.Add(assignArgument);
-                assign.Run();
-            }
+            //while (ConditionHelper.RunCondition(ref conditionArgument,Variables))
+            //{
+            //    Current.Blocks.RunBlock(Variables);
+            //    Assign assign = new Assign();
+            //    assign.Variables = new System.Collections.Generic.List<WFVariable>();
+            //    assign.Variables.AddRange(Variables);
+            //    assign.Arguments = new System.Collections.Generic.List<WFArgument>();
+            //    assign.Arguments.Add(assignArgument);
+            //    assign.Run();
+            //}
 
             return new WFResponse();
         }

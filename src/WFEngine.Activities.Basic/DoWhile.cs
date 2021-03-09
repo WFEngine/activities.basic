@@ -22,10 +22,10 @@ namespace WFEngine.Activities.Basic
                 Name = "Condition",
                 Value = JsonConvert.SerializeObject(conditionItem)
             };
-            do
-            {
-                Current.Blocks.RunBlock(Variables);
-            } while (ConditionHelper.RunCondition(ref conditionItemArgument,Variables));            
+            //do
+            //{
+            //    Current.Blocks.RunBlock(Variables);
+            //} while (ConditionHelper.RunCondition(ref conditionItemArgument,Variables));            
             return new WFResponse();
         }
     }
