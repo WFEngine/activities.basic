@@ -21,9 +21,14 @@ namespace WFEngine.Activities.Basic.Condition
             var result = true;
             if (conditionGroup.ParentConditions.Any())
             {
+                ConditionGroup oldConditionGroup = null;
                 foreach (var parentCondition in conditionGroup.ParentConditions)
                 {
+                    if (conditionGroup == null || !conditionGroup.Equals(parentCondition))
+                        oldConditionGroup = parentCondition;
                     result = RunCondition(parentCondition, variables);
+                    var parentResult = RunCondition(oldConditionGroup, variables);
+                    result = RunCondition(result, parentResult,oldConditionGroup.Operator);
                     if (!result) break;
                 }
             }
