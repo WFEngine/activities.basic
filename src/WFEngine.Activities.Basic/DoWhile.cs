@@ -22,10 +22,17 @@ namespace WFEngine.Activities.Basic
                 Name = "Condition",
                 Value = JsonConvert.SerializeObject(conditionItem)
             };
-            //do
-            //{
-            //    Current.Blocks.RunBlock(Variables);
-            //} while (ConditionHelper.RunCondition(ref conditionItemArgument,Variables));            
+            ConditionGroup conditionGroup = new ConditionGroup()
+            {
+                ArgumentType = typeof(ConditionGroup).FullName,
+                ConditionItem = conditionItem,
+                Operator = "AND",
+                ParentConditions = new System.Collections.Generic.List<ConditionGroup>()
+            };
+            do
+            {
+                Current.Blocks.RunBlock(Variables);
+            } while (ConditionHelper.RunCondition(conditionGroup,Variables));
             return new WFResponse();
         }
     }
